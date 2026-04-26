@@ -1,0 +1,55 @@
+// 3. OPTIMAL APPROACH (Two Pointers 🔥)
+
+// This is the interview solution.
+
+// ✅ TC: O(n²)
+// ✅ SC: O(1) (excluding output)
+// 💡 CORE IDEA
+// Sort array
+// Fix one element
+// Use two pointers for remaining two numbers
+
+public class Solution {
+    public List<List<int>> ThreeSum(int[] nums) {
+        Array.Sort(nums);
+    var result = new List<List<int>>();
+    int n = nums.Length;
+
+    for(int i = 0; i < n - 2; i++) {
+
+        // Skip duplicate i
+        if(i > 0 && nums[i] == nums[i - 1])
+            continue;
+
+        int left = i + 1;
+        int right = n - 1;
+
+        while(left < right) {
+            int sum = nums[i] + nums[left] + nums[right];
+
+            if(sum == 0) {
+                result.Add(new List<int> { nums[i], nums[left], nums[right] });
+
+                // Skip duplicates for left
+                while(left < right && nums[left] == nums[left + 1])
+                    left++;
+
+                // Skip duplicates for right
+                while(left < right && nums[right] == nums[right - 1])
+                    right--;
+
+                left++;
+                right--;
+            }
+            else if(sum < 0) {
+                left++;
+            }
+            else {
+                right--;
+            }
+        }
+    }
+
+    return result;
+    }
+}
